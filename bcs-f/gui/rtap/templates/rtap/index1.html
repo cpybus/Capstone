@@ -1,0 +1,260 @@
+{% extends "rtap/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'rtap/css/index1.css' %}" />
+    <script defer src="{% static 'rtap/js/areaOfInterest.js' %}"></script>
+    <script defer src="{% static 'rtap/js/weather.js' %}"></script>
+    <script defer src="{% static 'rtap/js/liveData.js' %}"></script>
+    <script defer src="{% static 'rtap/js/map.js' %}"></script>
+    <script defer src="{% static 'rtap/js/filter.js' %}"></script>
+    <script defer src="{% static 'rtap/js/comparisonTable.js' %}"></script>
+    <script defer src="{% static 'rtap/js/mapNightMode.js' %}"></script>
+    <script defer src="{% static 'rtap/js/threatQueue.js' %}"></script>
+    <script defer src="{% static 'rtap/js/aircraftInfoPanel.js' %}"></script>
+    <script defer src="{% static 'rtap/js/settings.js' %}"></script>
+    <script defer src="{% static 'rtap/js/main.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <header>
+        <nav>
+            <ul>
+                <li class="left">
+                    <img class="icon" src="{%static 'rtap/img/info.png' %}" onclick="app.toggleSidebar('#left-sidebar', 'left')">
+                </li>
+                <li class="left">
+                    {% url 'analyze' as analyze %}
+                    <a href="{{ analyze }}" target="_blank">Analyze</a>
+                </li>
+                <li class="left"><a href="#" onclick="app.aoi.create()">Create AOI</a></li>
+                <li>
+                    <img class="icon" src="{%static 'rtap/img/settings.png' %}" onclick="app.toggleSidebar('#settings-tab','up')">
+                </li>
+                <li>
+                    <img class="icon" src="{%static 'rtap/img/threat.png' %}" onclick="app.toggleSidebar('#warnings-panel', 'right')">
+                </li>
+                <li>
+                    <input type="text" name="search" id="searchbox" placeholder="Search ICAO...">
+                </li>
+                <li>
+                    <img class="icon" id="search-submit" onclick="app.search()" src="{%static 'rtap/img/search.png' %}">
+                </li>
+
+                <li>
+                    <img class="icon" src="{%static 'rtap/img/contact.png' %}" onclick="app.toggleSidebar('#contact-panel', 'up')">
+                </li>
+                <li>
+                    <img class="icon" src="{%static 'rtap/img/heart-rate.png' %}" onclick="app.toggleSidebar('#heart-rate-panel', 'down')">
+                </li>
+
+                <!-- <li>
+                    <a href="#" onclick="app.weather.toggle(app.map)">Toggle Weather</a>
+                </li>
+                <li>
+                    <a href="#" onclick="app.map.toggleNightMode()">Toggle Dark Mode</a>
+                </li> -->
+            </ul>
+        </nav>
+    </header>
+
+    <div id="left-sidebar" class="sidebar left">
+
+        <div id="aircraft-info-panel" class="light">
+            <h3>Info Panel</h3>
+            <div class="thumbnail-container">
+                <img id="aircraft-thumbnail" class="thumbnail" src="{%static 'rtap/img/aircraft-icon-placeholder.png' %}" onerror="this.src='../../static/rtap/img/aircraft-icon-placeholder.png'">
+            </div>
+            <table id="aircraft-info-table" class="lighter"></table>
+            <table id="aircraft-threat-info-table" class="lighter">
+                <tr><td colspan="2">Threat Analysis</td>
+            </table>
+            {% url 'aircraftInfo' as aircraftInfo %}
+            <a href='{{ aircraftInfo }}' target="_blank">
+                <img class="icon" src="../../static/rtap/img/new_tab.png">
+            </a>
+        </div>
+
+        <div id="filter-panel" class="lighter">
+            <p class="hideshow" onclick="app.toggleDrawer('#filter-panel')">Hide</p>
+            <div id="filts"></div>
+            <table id="filter-table">
+                <form id="defaultFilterForm" >
+                    <tr>
+                        <td class="fieldName">Max alt:</td><td><input type="Number" name="maxAlt"></td>
+                    </tr>
+                    <tr>
+                        <td class="fieldName">Min alt:</td><td><input type="Number" name="minAlt"></td>
+                    </tr>
+                    <tr>
+                        <td class="fieldName">Max speed:</td><td><input type="Number" name="maxSpd"></td>
+                    </tr>
+                    <tr>
+                        <td class="fieldName">Min speed:</td><td><input type="Number" name="minSpd"></td>
+                    </tr>
+                    <tr>
+                        <td class="fieldName">Point Lat:</td><td><input type="Number" name="lat"></td>
+                    </tr>
+                    <tr>
+                        <td class="fieldName">Point Lng:</td><td><input type="Number" name="lng"></td>
+                    </tr>
+                    <tr>
+                        <td class="fieldName">radius:</td><td><input type="Number" name="radius"></td>
+                    </tr>
+                    <tr>
+                        <td></td><td>
+                            <select id="distUnits">
+                              <option value="miles">miles</option>
+                              <option value="km">km</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fieldName"><input type="button" onclick="app.filters.defaultFilter(app.map)" value="Submit"></td>
+                    </tr>
+                </form>
+            </table>
+        </div>
+
+    </div>
+
+
+    <div id="aircraft-comparison-panel" class="light">
+        <table id="aircraft-comparison-table">
+            <tr data-field="Icao"><td class="fieldName">ICAO</td></tr>
+            <tr data-field="Model"><td class="fieldName">Model</td></tr>
+            <tr data-field="Operator"><td class="fieldName">Operator</td></tr>
+            <tr data-field="Reg"><td class="fieldName">Registration</td></tr>
+            <tr data-field="SourceAirport"><td class="fieldName">From</td></tr>
+            <tr data-field="DestAirport"><td class="fieldName">To</td></tr>
+            <tr data-field="Color"><td class="fieldName">Color</td></tr>
+        </table>
+    </div>
+
+    <div id="warnings-panel" class="sidebar right light">
+        <table class="tabs">
+            <tr>
+                <td id="threat-queue-tab" class="tab active-tab light" onclick="app.switchThreatTab('#threat-queue-tab', '#threat-queue-panel')"><h3>Threat Queue</h3></td>
+                <td id="alerts-tab" class="tab lighter" onclick="app.switchThreatTab('#alerts-tab','#alerts-panel')"><h3>Alerts</h3></td>
+            </tr>
+        </table>
+        <div id="threat-queue-panel" class="tab-panel active-tab-panel">
+            <h3>Threat Queue</h3>
+            <table id="table-header">
+                <th style="width: 4em">Threat level</th><th>ICAO</th>
+            </table>
+            <table id="threat-queue-table"></table>
+        </div>
+        <div id="alerts-panel" class="tab-panel">
+            <h3>Alerts</h3>
+            <table id="table-header">
+                <th style="width:0" hidden>null</th><th>ICAO</th><th>Alert Type</th>
+            </table>
+            <table id="alerts-table">
+            </table>
+        </div>
+    </div>
+
+    <div id="heart-rate-panel" class="light">
+        <h3>Heart Rate Information</h3>
+        <div id="bpm" class="lighter">
+            <h3>BPM</h3>
+            <p>76</p>
+        </div>
+        <div id="bpm-dev" class="lighter">
+            <h3>% From Mean</h3>
+            <p>6.8</p>
+        </div>
+    </div>
+
+    <div id="contact-panel" class="light">
+        <h3>Select A Contact</h3>
+        <div id="contact-list">
+            <ul>
+                <li class="lighter hover" onclick="app.setContactPhoto('john-brennan.jpg')">John Brennan (CIA Director)</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('donald-trump.jpg')">Donald Trump (POTUS)</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('john-kelly.jpg')">John Kelly (Homeland Security)</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('nick-rasmussen.jpg')">Nick Rasmussen (Counterterrorism)</li>
+
+                <li class="lighter hover" onclick="app.setContactPhoto('jenny-amador.jpg')">Jenny Amador</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('greg-bartell.jpg')">Greg Bartell</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('claire-cecilio.jpg')">Claire Cecilio</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('michael-gardner.jpg')">Michael Gardner</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('ben-reynolds.jpg')">Ben Reynolds</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('adam-teyer.jpg')">Adam Teyer</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('ben-thomas.jpg')">Ben Thomas</li>
+                <li class="lighter hover" onclick="app.setContactPhoto('mark-westerhoff.jpg')">Mark Westerhoff</li>
+            </ul>
+        </div>
+        <div id="contact-photo">
+            <div class="thumbnail-container">
+                <img class="thumbnail" id="profile-photo" src="{%static 'rtap/img/profile-placeholder.png' %}">
+            </div>
+        </div>
+        <table id="contact-actions">
+            <tr><td class="lighter hover">Call</td><td class="lighter hover">Message</td></tr>
+        </table>
+    </div>
+
+    <div id="settings-tab" class="light" >
+        <h3>RTAP Settings</h3>
+        <div id="settings">
+            <ul>
+                <!-- <li>
+                    <input type="checkbox" checked="checked" autocomplete="off" onclick="app.toggleSidebar('#heart-rate-panel', 'down')">
+                    Show Heartrate Panel
+                </li>
+                <li>
+                    <input type="checkbox" checked="checked" autocomplete="off" onclick="app.toggleSidebar('#left-sidebar', 'left')">
+                    Show Aircraft Info
+                </li>
+                <li>
+                    <input type="checkbox" checked="checked" autocomplete="off" onclick="app.toggleSidebar('#warnings-panel', 'right')">
+                    Show Warnings Panel
+                </li>
+                <li>
+                    <input type="checkbox" checked="checked" autocomplete="off" onclick="app.toggleSidebar('#contact-panel', 'up')">
+                    Show Contact Panel
+                </li> -->
+                <li>
+                    Weather Opacity
+                    <input id="weather-opacity" type="range" min="0" max="1" step="0.1" value="0.6">
+                </li>
+                <li>
+                    <input type="checkbox" autocomplete= "off" onclick="app.map.toggleNightMode()">Enable Dark Mode</a>
+                </li>
+                <h3>Subscriptions</h3>
+                <li>
+                    <input type="checkbox" id="EADS" onclick="app.filters.subEADS(app.map)" checked>EADS</a>
+                </li>
+                <li>
+                    <input type="checkbox" id="WADS" onclick="app.filters.subWADS(app.map)" checked>WADS</a>
+                </li>
+                <li>
+                    <input type="checkbox" id="SEADS" onclick="app.filters.subSEADS(app.map)" checked>SEADS</a>
+                </li>
+
+            </ul>
+            <button type="button"  onclick="app.toggleSidebar('#settings-tab','up')">Close</button>
+        </div>
+
+    </div>
+
+    <div id="aoi-dialog" title="AOI Settings">
+        <form>
+            <fieldset>
+                <label for="minAlt">Min Alt [ft]</label>
+                <input type="Number" name="minAlt" id="minAlt" class="text ui-widget-content ui-corner-all">
+                <label for="maxAlt">Max Alt [ft]</label>
+                <input type="Number" name="maxAlt" id="maxAlt" class="text ui-widget-content ui-corner-all">
+                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+
+
+    <div id="map"></div>
+
+{% endblock %}

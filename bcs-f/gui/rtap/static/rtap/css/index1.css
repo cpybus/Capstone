@@ -1,0 +1,508 @@
+/* -------------------------------   */
+/*           NAVIGATION BAR          */
+/* ----------------------------------*/
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    height: 2.5em;
+    z-index: 1;
+}
+
+nav li {
+    float: right;
+    display: inline;
+    vertical-align: middle;
+    line-height: 2.5em;
+}
+
+nav .left {
+    float: left;
+}
+
+nav .icon {
+    padding-left: 16px;
+    padding-right: 7px;
+    vertical-align: middle;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+nav li a:hover {
+    background-color: #111;
+}
+
+/* -------------------------------   */
+/*              SIDEBAR              */
+/* ----------------------------------*/
+.sidebar {
+    position: absolute;
+    top: 2.5em;
+    bottom: 0;
+    width: 16em;
+    z-index: 1;
+}
+
+.sidebar.left{
+    left: 0;
+}
+
+.sidebar.right {
+    right: 0;
+}
+
+/* -------------------------------   */
+/*         ICONS & IMAGES            */
+/* ----------------------------------*/
+.icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.thumbnail-container {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.thumbnail {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 7px;
+}
+
+#aircraft-info-panel .icon {
+    float: right;
+}
+
+/* -------------------------------   */
+/*       AIRCRAFT INFO PANEL         */
+/* ----------------------------------*/
+#aircraft-info-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 67%;
+    text-align: center;
+    overflow-y: auto;
+}
+
+#aircraft-info-panel .thumbnail-container {
+    width: 14em;
+}
+
+#aircraft-info-table {
+    table-layout: fixed;
+    width: 14em;
+    text-align: left;
+    border-radius: 7px;
+    margin: 0 auto;
+}
+
+
+#aircraft-threat-info-table {
+    width: 14em;
+    margin: 0 auto;
+    border-radius: 7px;
+    margin-top: .5em;
+    table-layout: fixed;
+    margin-bottom: .5em;
+    visibility: hidden;
+}
+
+/* -------------------------------   */
+/*            FILTER PANEL           */
+/* ----------------------------------*/
+#filter-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 33%;
+    overflow-x: hidden;
+}
+
+#filter-table {
+    table-layout: auto;
+    border-collapse: collapse;
+}
+
+/* -------------------------------   */
+/*     AIRCRAFT COMPARISON PANEL     */
+/* ----------------------------------*/
+#aircraft-comparison-panel {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+#aircraft-comparison-table td {
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/* -------------------------------   */
+/*           Settings Panel          */
+/* ----------------------------------*/
+
+#settings-tab {
+    display: none;
+    position: absolute;
+    top: 2.5em;
+    width: 50em;
+    left: 50%;
+    margin-left: -25em;
+    height: 20em;
+    z-index: 2;
+    text-align: left;
+    border-style: solid;
+    border-width: 5px;
+}
+
+#settings-tab h3 {
+    margin: .25em 0 .25em 0;
+    text-align: center;
+}
+
+#settings {
+    float: left;
+    width: 95%;
+    height: 25em;
+    margin-left: 2.5%;
+    overflow-y: auto;
+}
+
+#settings ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* -------------------------------   */
+/*          PANEL HEADER             */
+/* ----------------------------------*/
+
+#table-header {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+
+#table-header tr {
+    cursor: pointer;
+    line-height: 4.5em;
+    border: 1px solid
+}
+
+#table-header tr .lighter{
+    border: 1px solid black;
+}
+
+#table-header tr .darker{
+    border: 1px solid white;
+}
+
+#table-header .table-spacer{
+    border: none;
+    height: 3px;
+}
+
+#table-header th {
+    line-height: 2em;
+}
+
+.poly-id {
+    width: 4em;
+}
+
+/* -------------------------------   */
+/*         THREAT QUEUE PANEL        */
+/* ----------------------------------*/
+.tabs {
+    table-layout: fixed;
+    width: 100%;
+    height: 2.5em;
+    border-collapse: collapse;
+}
+
+.tabs td {
+    margin: 0;
+    padding: 0;
+}
+
+.tabs h3 {
+    margin: 0;
+}
+
+.tab-panel {
+    display: none;
+}
+
+.active-tab-panel {
+    display: block !important;
+}
+
+#warnings-panel {
+    text-align: center;
+    bottom: auto;
+}
+
+#threat-queue-table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#threat-queue-table tr {
+    cursor: pointer;
+    line-height: 4em;
+    border: 1px solid black;
+}
+
+#threat-queue-table .table-spacer{
+    border: none;
+    height: 5px;
+}
+
+.threat-color {
+    width: 4em;
+    color: black !important;
+}
+/* -------------------------------   */
+/*             IoA QUEUE             */
+/* ----------------------------------*/
+
+#alerts-table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#alerts-table tr {
+    cursor: pointer;
+    line-height: 4em;
+    border: 1px solid
+}
+
+#alerts-table tr .lighter{
+    border: 1px solid black;
+}
+
+#alerts-table tr .darker{
+    border: 1px solid white;
+}
+
+#alerts-table .table-spacer{
+    border: none;
+    height: 3px;
+}
+
+
+.poly-id {
+    width: 4em;
+}
+
+/* -------------------------------   */
+/*             SEARCH BOX            */
+/* ----------------------------------*/
+#searchbox {
+    height: 30px;
+    margin-right: 1em;
+    background-color: white;
+    padding-left: 30px;
+    width: 7em;
+
+}
+
+#search-submit {
+    position: relative;
+    margin-right: -37px;
+
+}
+
+/* -------------------------------   */
+/*             NIGHT MODE            */
+/* ----------------------------------*/
+.dark {
+    background-color: #222;
+    color: white;
+}
+
+.darker {
+    background-color: #111;
+    color: white;
+}
+
+.light {
+    background-color: #E5E5E5;
+    color: black;
+}
+
+.lighter {
+    background-color: white;
+    color: black;
+}
+
+.lighter.hover:hover {
+    background-color: #EEE;
+}
+
+.darker.hover:hover {
+    background-color: #222;
+}
+
+/* -------------------------------   */
+/*          HEART RATE PANEL         */
+/* ----------------------------------*/
+#heart-rate-panel {
+    position: absolute;
+    bottom: 0;
+    height: 7em;
+    width: 20em;
+    left: 50%;
+    margin-left: -10em;
+    z-index: 1;
+    text-align: center;
+}
+
+#heart-rate-panel h3, p {
+    margin: .25em 0 .25em 0;
+}
+
+#bpm {
+    display: inline-block;
+    width: 8em;
+    margin-right: .5em;
+}
+
+#bpm-dev {
+    display: inline-block;
+    width: 8em;
+}
+
+
+/* -------------------------------   */
+/*          CONTACT PANEL            */
+/* ----------------------------------*/
+#contact-panel {
+    position: absolute;
+    top: 2.5em;
+    width: 25em;
+    left: 50%;
+    margin-left: -12.5em;
+    z-index: 1;
+    text-align: center;
+}
+
+#contact-panel h3 {
+    margin: .25em 0 .25em 0;
+}
+
+#contact-list {
+    float: left;
+    width: 45%;
+    height: 10em;
+    margin-left: 2.5%;
+    overflow-y: auto;
+}
+
+#contact-photo {
+    float: right;
+    width: 45%;
+    margin-right: 2.5%;
+    height: 10em
+}
+
+#contact-photo .thumbnail-container {
+    height: 100%;
+    margin: 0 auto;
+}
+
+#contact-list ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#contact-actions {
+    table-layout: fixed;
+    width: 100%;
+    line-height: 2.5em;
+    margin-top: 11em;
+}
+
+/* -------------------------------   */
+/*              AOI DIALOG           */
+/* ----------------------------------*/
+#aoi-dialog label, input {
+    display:block;
+}
+
+#aoi-dialog input.Number {
+    margin-bottom:12px;
+    width:95%; padding:
+    .1em;
+}
+
+fieldset {
+    padding:0;
+    border:0;
+    margin-top:25px;
+}
+
+/* -------------------------------   */
+/*            MISCELLANEOUS          */
+/* ----------------------------------*/
+#map {
+    position: absolute;
+    top: 2.5em;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.hideshow {
+    float: right;
+    margin: 0;
+    padding: 3px;
+}
+
+.meter {
+    height: 20px;
+    position: relative;
+    background: #555;
+}
+
+.meter > span {
+  display: block;
+  height: 100%;
+  background-color: rgb(43,194,83);
+  box-shadow:
+    inset 0 2px 9px  rgba(255,255,255,0.3),
+    inset 0 -2px 6px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.fieldName {
+    text-align: right !important;
+    font-weight: bold;
+    white-space: nowrap;
+}

@@ -1,0 +1,21 @@
+#map {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#toolbar {
+    height: 2em;
+    width: 100%;
+    margin 0 auto;
+    display: table;
+    background-color: #003300;
+}
+
+#toolbar h1 {
+    margin: 0;
+    padding: .1em;
+    display: table-cell;
+    vertical-align: middle;
+    color: white;
+}

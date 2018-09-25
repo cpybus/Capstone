@@ -1,0 +1,70 @@
+{% extends "rtap/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'rtap/css/aircraftInfo.css' %}" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script defer src="{% static 'rtap/js/aircraftInfo.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="column">
+        <h3 id="icao">ICAO</h3>
+        <div class="thumbnail-container">
+            <img id="aircraft-thumbnail" class="thumbnail" src="{%static 'rtap/img/aircraft-icon-placeholder.png' %}"  onerror="this.src='../../static/rtap/img/aircraft-icon-placeholder.png'">
+        </div>
+        <table id="aircraft-info-table"></table>
+        <table id="threat-info-table"></table>
+    </div>
+    <div class="column">
+        <h3>Weather Info</h3>
+        <div id="weather-tables">
+            <div id="weather-info-table-wrapper"><table id="weather-info-table"></table></div>
+            <div id="wind-speed-table-wrapper">
+                <table id="wind-speed-table">
+                    <tr><th>Alt [ft]</th><th>Speed [mph]</th><th>Angle [°]</th></tr>
+                    <tr><td>1000</td> <td>34.2</td><td>2.495</td></tr>
+                    <tr><td>10000</td><td>21.7</td><td>30.73</td></tr>
+                    <tr><td>20000</td><td>13.3</td><td>56.387</td></tr>
+                    <tr><td>30000</td><td>29.1</td><td>45.283</td></tr>
+                    <tr><td>35000</td><td>38.3</td><td>70.89</td></tr>
+                    <tr><td>40000</td><td>52.9</td><td>110.37</td></tr>
+                </table>
+            </div>
+        </div>
+        <h3>Altitude Plot</h3>
+        <div id="alt_chart"></div>
+        <h3>Speed Plot</h3>
+        <div id="spd_chart"></div>
+    </div>
+    <div class="column">
+        <h3>Passenger Info</h3>
+        <div id="seating-chart">
+            <img src="{%static 'rtap/img/seating-chart.png' %}">
+        </div>
+        <div id="passenger-list">
+            <table id="passenger-list-table">
+                <tr onclick="showPassport()"><td>Joseph J. Gardenhire</td><td>A1</td></tr>
+                <tr onclick="showPassport()"><td>Fredrick M. Muniz</td><td>B1</td></tr>
+                <tr onclick="showPassport()"><td>Christopher J. Hill</td><td>C1</td></tr>
+ 
+                <tr onclick="showPassport()"><td>Edith H. Drum</td><td>A2</td></tr>
+                <tr onclick="showPassport()"><td>Stephanie C. Clark</td><td>B2</td></tr>
+                <tr onclick="showPassport()"><td>Betty R. Horton</td><td>C2</td></tr>
+                <tr onclick="showPassport()"><td>Joseph J. Coleman</td><td>H2</td></tr>
+                <tr onclick="showPassport()"><td>Travis C. Jones</td><td>J2</td></tr>
+                <tr onclick="showPassport()"><td>Mary E. Bell</td><td>K2</td></tr>
+ 
+                <tr onclick="showPassport()"><td>Glenda A. Sargent</td><td>A3</td></tr>
+                <tr onclick="showPassport()"><td>Tyler B. Smith</td><td>B3</td></tr>
+                <tr onclick="showPassport()"><td>Reinaldo L. Riley</td><td>C3</td></tr>
+                <tr onclick="showPassport()"><td>Leslie G. Parker</td><td>H3</td></tr>
+                <tr onclick="showPassport()"><td>Kyle A. Cooney</td><td>J3</td></tr>
+                <tr onclick="showPassport()"><td>Jason C. Mullinax</td><td>K3</td></tr>
+            </table>
+        </div>
+    </div>
+    <div id="passport" onclick="hidePassport()">
+        <img id="passport-photo" src="{%static 'rtap/img/passport.png' %}">
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+    <head>
+        <link rel="shortcut icon" href="{%  static 'rtap/img/favicon.ico' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'rtap/css/base.css' %}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script defer src="{% static 'rtap/js/utils.js' %}"></script>
+        <link href="https://fonts.googleapis.com/css?family=Heebo" rel="stylesheet">
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>

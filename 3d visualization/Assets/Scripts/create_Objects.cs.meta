@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 34e05373dba7fce479eedce9c0c47237
+timeCreated: 1513040047
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - boeing_747: {fileID: 1903204337135424, guid: 8136ab9af4bb99442868e76f47b2459f,
+      type: 2}
+  - Unknown_Object: {fileID: 1094320370188184, guid: 81d811926ab2d4446b1e50032f3d8c7e,
+      type: 2}
+  - boeing_747_standalone: {instanceID: 0}
+  - Unknown_Object_standalone: {instanceID: 0}
+  - map: {instanceID: 0}
+  - bubble_toggle: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

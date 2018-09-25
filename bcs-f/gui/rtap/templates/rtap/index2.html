@@ -1,0 +1,14 @@
+{% extends "rtap/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'rtap/css/index2.css' %}" />
+    <script defer src="{% static 'rtap/js/map.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <div id="toolbar">
+        <h1>RTAP Prototype UI #2</h1>
+    </div>
+    <div id="map"></div>
+{% endblock %}

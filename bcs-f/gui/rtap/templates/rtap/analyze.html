@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <title>U-0012</title>
+        <link rel="shortcut icon" href="/public/favicon.ico"></link>
+        <style>
+            body, html {
+                padding: 0px;
+                margin: 0px;
+                font-family: Arial;
+                height: 100%;
+                background-color: #333;
+                color: white;
+                overflow: hidden; /* Important to avoid issues with scrollbars. */
+            }
+
+
+            .center:after {
+                content: "";
+                vertical-align: middle;
+                display: inline-block;
+                height: 100%;
+                min-height: inherit;
+            }
+
+            button{
+                display: inline-block;
+                background-color: #444;
+                color: white;
+                width: 100%;
+                height: 50px;
+                /*transition: all 1s;*/
+                border: none;
+                cursor: pointer;
+                text-align: center;
+                font-size: 1em;
+            }
+            button:hover, .selected {
+                background-color: #eee;
+                color: #444;
+            }
+
+
+            header h1 {
+                font-size: 2em;
+                margin: .5em;
+            }
+
+            section {
+                width: calc( 500px - 1px );
+                float: left;
+                height: 100vh;
+                overflow: hidden;
+                border-right: 1px solid #eee;
+            }
+
+            section > div {
+                max-height: 100%;
+                min-height: 100vh;
+                overflow-y: auto;
+            }
+
+            section > div > *:not(hr){
+                padding: 1em 0px 1em 2em;
+                width: auto;
+            }
+
+            section .feedback-container {
+                width: inherit;
+            }
+            section .feedback-container button {
+                width: calc( 100% - 2em);
+                margin-bottom: .5em;
+                font-size: 1.2em;
+            }
+
+            main {
+                width: calc( 100vw - 500px );
+                float: left;
+                overflow: hidden;
+            }
+
+            /* Badge containers. */
+            main > div {
+                width: calc( 50% - 4em );
+                margin: 2em;
+                float: left;
+                height: calc( 50vh - 4em );
+                text-align: center;
+                vertical-align: middle;
+                position: relative;
+            }
+
+            /* Badge containers label. */
+            main > div > *:before {
+                content: attr(data-label);
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                background-color: #444;
+                border-bottom-left-radius: 5px;
+                border: 1px solid white;
+                border-top: 0px;
+                border-right: 0px;
+                padding: .5em 1em;
+                font-size: 1.2em;
+                height: 1em;
+                min-height: inherit;
+            }
+
+            main > div > span {
+                display: inline-block;
+                position: relative;
+                vertical-align: middle;
+            }
+
+            /* Badge container inners. */
+            main > div > span > * {
+                border-radius: 5px;
+                max-height: calc( 100% - 2em );
+                max-width: calc( 100% - 2em );
+                background-color: #eee;
+                padding: 1em;
+                vertical-align: middle;
+                cursor: pointer;
+            }
+
+            .full > *:before {
+                position: fixed;
+                font-size: 1.5em;
+            }
+
+            .full > * {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                width: 70vw;
+                background-color: transparent;
+                padding: 10vh 15vw 0px 15vw;
+                z-index: 100;
+            }
+
+            .full:before {
+                content: " ";
+                background-color: rgba(0,0,0,.8);
+                display: block;
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                width: 100vw;
+                height: 100vh;
+                z-index: 100;
+            }
+
+            .overlay {
+                position: absolute;
+                background-color: rgba(0,0,0,.8);
+                top: 0px;
+                left: 0px;
+                width: 100vw;
+                height: 100vh;
+                opacity: 0;
+                transform: translateY(100vh);
+                transition: opacity 1s, transform 0s linear 1s;
+            }
+            .overlay.show { transform: translateY(0); opacity: 1; transition: opacity 1s; }
+            .overlay-inner {
+                background-color: #eee;
+                height: 300px;
+                width: 500px;
+                position: absolute;
+                top: calc( 50vh - 150px );
+                left: calc( 50vw - 250px );
+                text-align: center;
+            }
+            #notification-message {
+                color: black;
+                font-size: 2em;
+            }
+            #notification-message button,
+            #notification-message select {
+                font-size: 1em;
+                max-width: 300px;
+                margin: .25em;
+            }
+
+            h2, h3 { font-weight: 500; }
+            h2 { margin: 1em 0px 0px .5em; }
+            h3 { margin: 0px 0px 0px 3em; }
+        </style>
+    </head>
+    <body>
+        <section>
+            <div>
+                <header>
+                    <h1>Recreational UAV</h1>
+                </header>
+                <hr />
+
+                <div>
+                    <img style="width: 100%;" src="{%static 'rtap/img/analyze/classification.svg' %}" />
+                </div>
+
+                <hr />
+                <div class="classification-breakdown">
+                   <h2>1. Recreational UAV - 70%</h2>
+                       <h3>Dynamics</h3>
+                       <h3>Acoustic Signature</h3>
+                       <h3>Velocity</h3>
+                       <h3>Size</h3>
+                   <h2>2. Balloon - 20%</h2>
+                       <h3>Dynamics</h3>
+                       <h3>Acoustic Signature</h3>
+                   <h2>3. Goose - 10%</h2>
+                       <h3>Velocity</h3>
+                       <h3>Size</h3>
+                </div>
+
+                <hr />
+                <div class="feedback-container">
+                    <br />
+                    <button onclick="setNote(showClassSelect)">Classify</button>
+                    <button onclick="setNote('Flagged for further review.', 2000)">Flag</button>
+                </div>
+            </div>
+        </section>
+
+        <main>
+                <div class="center">
+                    <span data-label="Approximated Render"><video src="{%static 'rtap/img/analyze/visual.ogv' %}" autoplay loop></video></span>
+                </div>
+
+                <div class="center">
+                    <span data-label="Acoustic Signature (via ALB)"><img src="{%static 'rtap/img/analyze/spectral.png' %}" /></span>
+                </div>
+
+                <div class="center">
+                    <span data-label="Street Camera (via 9th St.)"><img src="{%static 'rtap/img/analyze/screen1.png' %}" /></span>
+                </div>
+
+                <div class="center">
+                    <span data-label="IR Spectral Image"><img src="{%static 'rtap/img/analyze/irspec.png' %}" /></span>
+                </div>
+        </main>
+
+        <div class="overlay" id="notification">
+            <div class="overlay-inner center">
+                <span id="notification-message">
+                </span>
+            </div>
+        </div>
+        <script type="text/javascript">
+            const items = document.querySelectorAll("main div > *, tr:nth-of-type(4) div > *")
+            for (let i = 0; i < items.length; i++){
+                items[i].addEventListener("click", _ => {
+                    items[i].parentNode.classList.toggle("full")
+                })
+            }
+
+            const showClassSelect = `<p>
+                        Select Classification:
+            <p>
+                <select>
+                    <option>Rec. UAV</option>
+                    <option>Hot Air Balloon</option>
+                    <option>Goose</option>
+                </select>
+                <button onclick="setNote('Classification updated.', 2000)">Confirm</button>
+                <button onclick="hideNote()">Cancel</button>
+            </p>
+        </p>`
+
+        const showNote = _ => document.getElementById("notification").classList.add("show")
+        const hideNote = _ => document.getElementById("notification").classList.remove("show")
+        const setNote = (m, delay) => {
+            document.getElementById("notification-message").innerHTML = m
+            showNote()
+            if (delay) setTimeout(hideNote, delay)
+        }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,4 @@
+*.pyc
+dump.rdb
+celerybeat-schedule
+migrations
